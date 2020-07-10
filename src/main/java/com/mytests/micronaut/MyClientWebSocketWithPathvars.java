@@ -19,36 +19,29 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public abstract class MyClientWebSocketWithPathvars implements AutoCloseable {
     private WebSocketSession session;
     private HttpRequest request;
-
-    public String getPvar1() {
-        return pvar1;
-    }
-
-    private String pvar1;
+    private String pv;
     private Collection<String> replies = new ConcurrentLinkedQueue<>();
 
     @OnOpen
-    public void onOpen( WebSocketSession session, HttpRequest request) {
-        this.pvar1 = pvar1;
+    public void onOpen(String pvar1, WebSocketSession session, HttpRequest request) {
+        System.out.println("**********************************");
+        System.out.println("onopen:pvar1: "+pvar1);
+        System.out.println("**********************************");
+        this.pv = pvar1;
         this.session = session;
         this.request = request;
     }
     @OnMessage
     public void onMessage( String pvar1,
             String message) {
+        System.out.println("**********************************");
+        System.out.println("onmessage:pvar1: "+pvar1);
+        System.out.println("**********************************");
         System.out.println("pathvars socket client received message = " + message);
         replies.add(message);
     }
     public abstract void send(String message);
     
-    public WebSocketSession getSession() {
-        return session;
-    }
-
-    public HttpRequest getRequest() {
-        return request;
-    }
-
     public Collection<String> getReplies() {
         return replies;
     }
