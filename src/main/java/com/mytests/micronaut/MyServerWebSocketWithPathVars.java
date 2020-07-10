@@ -15,20 +15,21 @@ import org.reactivestreams.Publisher;
  * <p>Project: micronaut-websockets</p>
  * *******************************
  */
-@ServerWebSocket("/ws2/{smth}")
+@ServerWebSocket("/ws2/{some_var:[a-z]+\\d}")
 public class MyServerWebSocketWithPathVars {
+    
     private WebSocketBroadcaster broadcaster;
 
     public MyServerWebSocketWithPathVars(WebSocketBroadcaster broadcaster) {
         this.broadcaster = broadcaster;
     }
     @OnOpen
-    public Publisher onOpen(WebSocketSession session, @PathVariable("smth") String pvar1){
+    public Publisher onOpen(WebSocketSession session, @PathVariable("some_var") String pvar1){
       broadcaster.broadcast("pathvars socket opened for "+pvar1);  
       return session.send("pathvars socket was opened for "+pvar1);
     }
     @OnMessage
-    public Publisher onMessage(String message, @PathVariable("smth") String pvar1, WebSocketSession session){
+    public Publisher onMessage(@PathVariable("some_var") String pvar1, String message, WebSocketSession session){
         System.out.println("**********************************");
         System.out.println(message+" "+pvar1);
         System.out.println("**********************************");
@@ -37,7 +38,7 @@ public class MyServerWebSocketWithPathVars {
       return session.send("pathvars socket got a message "+message);
     }
     @OnClose
-    public void onClose(WebSocketSession session, @PathVariable("smth") String pvar1){
+    public void onClose(WebSocketSession session, @PathVariable("some_var") String pvar1){
        broadcaster.broadcast("pathvars socket was closed!!!");
        session.send("pathvars socket was closed") ;
     }

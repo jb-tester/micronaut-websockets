@@ -7,7 +7,6 @@ import io.micronaut.websocket.RxWebSocketClient;
 
 import javax.inject.Inject;
 import java.util.Collection;
-import java.util.HashMap;
 
 /**
  * *******************************
@@ -32,7 +31,7 @@ public class UseThem {
     @Get("/withVars")
     public Collection<String> sendWithPathVars(){
          
-        MyClientWebSocketWithPathvars myClient = webSocketClient.connect(MyClientWebSocketWithPathvars.class, "/ws2/foo").blockingFirst();
+        MyClientWebSocketWithPathvars myClient = webSocketClient.connect(MyClientWebSocketWithPathvars.class, "/ws2/foo9").blockingFirst();
         myClient.send("HELLO AGAIN");
         return myClient.getReplies();
     }
