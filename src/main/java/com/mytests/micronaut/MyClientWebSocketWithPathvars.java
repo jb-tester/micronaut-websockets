@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * <p>Project: micronaut-websockets</p>
  * *******************************
  */
-@ClientWebSocket("/ws2/{pvar1}")
+@ClientWebSocket("/ws2/{pvar1:[a-z]+\\d}")
 public abstract class MyClientWebSocketWithPathvars implements AutoCloseable {
     private WebSocketSession session;
     private HttpRequest request;
